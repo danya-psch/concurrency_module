@@ -190,8 +190,9 @@ static int __init concurrency_module_init(void)
 
 	return 0;
 err_irq:
-	free_irq(button_irq, &locked_list_head);
+	button_gpio_deinit();
 err_button:
+	del_timer(&timer);
 err_list:
 	LIST_FREE(list_data_t, &locked_list_head.list_head, list_node);
 	return rc;
@@ -199,6 +200,7 @@ err_list:
 
 static void __exit concurrency_module_exit(void)
 {
+	free_irq(button_irq, &locked_list_head);
 	button_gpio_deinit();
 	del_timer(&timer);
 	LIST_FREE(list_data_t, &locked_list_head.list_head, list_node);
