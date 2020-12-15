@@ -61,7 +61,7 @@ static int button_gpio = -1;
 
 static irqreturn_t button_thread(int irq, void *dev_id)
 {
-	int num = -1;
+	int num = 0;
 	ktime_t time;
 	list_data_t *ptr;
 	spin_lock(&locked_list_head.spinlock);
